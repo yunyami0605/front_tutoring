@@ -30,4 +30,9 @@
 
 ### 3. 로그인 기능 구현 관련 라이브러리 설치학기
 
-- axios, msw, react-router-dom
+- yarn add axios react-router-dom
+- yarn add -D msw
+
+- msw : api mock(가짜) 만드는 기능 라이브러리
+- axios : api 호출 함수
+- react-router-dom : 페이지 이동, 파라미터 관련 기능 제공
