@@ -1,15 +1,17 @@
-### 1. react vite 초기 셋팅
+### 1-1. react vite 초기 셋팅
 
 1. npm create vite@latest my-app
 2. cmd > typescript 선택
 3. cd my-app
 4. npm -g install yarn
 5. yarn
-6. yarn add -D @types/react @types/react-dom
+6. yarn add -D @types/react @types/react-dom @types/node
 7. yarn run dev 명령 후, 5173 로컬에서 정상적으로 실행되는지 확인
 8. 초기 react, vite, yarn, typescript 설정 완료
 
-### 2. react eslint, prettier 셋팅
+---
+
+### 1-2. react eslint, prettier 셋팅
 
 1. yarn add -D eslint prettier eslint-plugin-react-hooks eslint-plugin-react-refresh @typescript-eslint/parser @typescript-eslint/eslint-plugin
 
@@ -28,11 +30,30 @@
 - rules : 원하는 규칙을 커스텀하게 설정할 수 있음 (extends 중에 자신이 원하지 않는 부분을 고칠 수 있음, 혹은 extends 없이 개별적으로 사용 가능)
 - parser: 코드를 읽는 방법 정의
 
-### 3. 로그인 기능 구현 관련 라이브러리 설치학기
+---
+
+### 1-3. 로그인 기능 구현 관련 라이브러리 설치학기
 
 - yarn add axios react-router-dom
-- yarn add -D msw
 
-- msw : api mock(가짜) 만드는 기능 라이브러리
 - axios : api 호출 함수
 - react-router-dom : 페이지 이동, 파라미터 관련 기능 제공
+
+---
+
+### 1-4 msw 셋팅하기
+
+- msw : api mock(가짜) 만드는 기능 라이브러리
+
+- yarn add -D msw
+- npx msw init public/ --save
+
+- msw 셋팅하기
+
+```
+// src/mocks 코드 작성
+
+authHandler : 로그인 mock api 함수
+brower : 브라우저 용 설정
+
+```
