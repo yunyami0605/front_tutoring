@@ -51,7 +51,12 @@ export const authHandler = [
         return invalidErrorResponse;
       }
 
-      return HttpResponse.json({ access: 'att' }, { status: 200 });
+      return HttpResponse.json(
+        { access: 'att', refresh: 'rtt' },
+        {
+          status: 200,
+        }
+      );
     } else {
       console.log(parse.error.message);
       return invalidErrorResponse;
