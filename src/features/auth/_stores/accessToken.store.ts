@@ -22,10 +22,15 @@ export const useAccessTokenStore = create<AccessTokenState>()(
     ...initialState,
 
     setToken: (payload) =>
-      set(() => ({
-        accessToken: payload,
-      })),
+      set(
+        () => ({
+          accessToken: payload,
+        }),
+        false,
+        'accessToken/setToken'
+      ),
 
-    reset: () => set((prev) => ({ ...prev, ...initialState })),
+    reset: () =>
+      set((prev) => ({ ...prev, ...initialState }), false, 'accessToken/reset'),
   }))
 );

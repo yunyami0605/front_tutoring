@@ -57,11 +57,11 @@ function LoginPage() {
         }
       );
 
-      // 1. at 토큰 저장
-
-      // 2. 메인 페이지 이동
       if (res.status === 200) {
+        // 1. at 토큰 저장
         setToken(res.data.access);
+
+        // 2. 메인 페이지 이동
         naviagate('/home');
       }
     } catch (error) {
