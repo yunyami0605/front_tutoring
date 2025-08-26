@@ -1,6 +1,7 @@
 import { http, HttpResponse } from 'msw';
 import z from 'zod';
 import { checkAuth } from './utils';
+import dayjs from 'dayjs';
 
 const posts = Array.from({ length: 4 }, (_, i) => ({
   id: String(i + 1),
@@ -20,7 +21,6 @@ const postBodySchema = z.object({
     .string()
     .min(2, '내용은 2글자 이상, 200글자 이하여야합니다.')
     .max(200, '내용은 2글자 이상, 200글자 이하여야합니다.'),
-  createdAt: z.string(),
 });
 
 const notFoundErrorResponse = HttpResponse.json(
@@ -85,12 +85,16 @@ export const postHandler = [
 
         return HttpResponse.json(
           { code: 'INVALID FORM', message, key: path },
-          { status: 201 }
+          { status: 400 }
         );
       }
     }
 
-    posts.push({ ...data, id: (posts.length + 1).toString() });
+    posts.push({
+      ...data,
+      id: (posts.length + 1).toString(),
+      createdAt: dayjs().format('YYYY-MM-DD'),
+    });
 
     return HttpResponse.json(mutationResponseData, { status: 201 });
   }),

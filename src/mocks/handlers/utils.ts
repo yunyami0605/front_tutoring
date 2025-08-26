@@ -3,7 +3,6 @@ import { HttpResponse } from 'msw';
 // 검증 로직
 export function checkAuth(request: Request) {
   const authHeader = request.headers.get('Authorization');
-  console.log('22');
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return {
