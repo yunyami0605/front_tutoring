@@ -10,13 +10,24 @@ import { useNavigate } from 'react-router-dom';
 import { loginSchema } from '../../features/auth/_schemas/auth.schemas';
 
 function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [form, setForm] = useState({
+    email: '',
+    password: '',
+  });
+
+  const initError = {
+    email: '',
+    password: '',
+    common: '', // 공통, 서버 에러
+  };
+
+  const [error, setError] = useState(initError);
   const naviagate = useNavigate();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const { email, password } = form;
 
     // react-hook-form @hookform/resolvers 로 대체해도 됨
     const result = loginSchema.safeParse({ email, password });
@@ -24,9 +35,10 @@ function LoginPage() {
       const _error = result.error.issues;
 
       if (_error.length !== 0) {
-        setError(_error[0].message);
+        const { message, path } = _error[0];
+        setError((prev) => ({ ...prev, [path[0]]: message }));
       } else {
-        setError('잘못된 접근입니다.');
+        setError((prev) => ({ ...prev, common: '잘못된 접근입니다.' }));
       }
 
       return;
@@ -47,8 +59,12 @@ function LoginPage() {
       }
     } catch (error) {
       console.log(error);
+
       if (error instanceof AxiosError) {
-        setError(error.response?.data.message ?? '');
+        setError(() => ({
+          ...initError,
+          common: error.response?.data.message ?? '',
+        }));
       }
     }
   };
@@ -61,8 +77,11 @@ function LoginPage() {
             label="이메일"
             name="email"
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={form.email}
+            error={error.email}
+            onChange={(e) =>
+              setForm((prev) => ({ ...prev, email: e.target.value }))
+            }
             placeholder="example@naver.com"
           />
 
@@ -70,9 +89,11 @@ function LoginPage() {
             label="비밀번호"
             name="password"
             type="password"
-            value={password}
-            error={error}
-            onChange={(e) => setPassword(e.target.value)}
+            value={form.password}
+            error={error.common.length !== 0 ? error.common : error.password}
+            onChange={(e) =>
+              setForm((prev) => ({ ...prev, password: e.target.value }))
+            }
             placeholder="비밀번호"
           />
         </section>
