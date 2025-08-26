@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { loginSchema } from '../../features/auth/_schemas/auth.schemas';
 import { useAccessTokenStore } from '../../features/auth/_stores/accessToken.store';
 import type { PostLoginResponse } from '../../features/auth/_types/response';
+import { setCookie } from '../../libs/cookie';
 
 function LoginPage() {
   const [form, setForm] = useState({
@@ -60,6 +61,9 @@ function LoginPage() {
       if (res.status === 200) {
         // 1. at 토큰 저장
         setToken(res.data.access);
+
+        // 실제 서비스에는 들어가면 안됩니다. (refresh는 응답으로도 안옴)
+        setCookie('rt', res.data.refresh, 60 * 60 * 24);
 
         // 2. 메인 페이지 이동
         naviagate('/home');
