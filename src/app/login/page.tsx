@@ -8,6 +8,8 @@ import TextButton from '../../shared/components/button/TextButton';
 import axios, { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { loginSchema } from '../../features/auth/_schemas/auth.schemas';
+import { useAccessTokenStore } from '../../features/auth/_stores/accessToken.store';
+import type { PostLoginResponse } from '../../features/auth/_types/response';
 
 function LoginPage() {
   const [form, setForm] = useState({
@@ -23,6 +25,7 @@ function LoginPage() {
 
   const [error, setError] = useState(initError);
   const naviagate = useNavigate();
+  const { setToken } = useAccessTokenStore();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,15 +49,19 @@ function LoginPage() {
 
     try {
       // api
-      const res = await axios.post('http://localhost:4000/auth/login', {
-        email,
-        password,
-      });
+      const res = await axios.post<PostLoginResponse>(
+        'http://localhost:4000/auth/login',
+        {
+          email,
+          password,
+        }
+      );
 
       // 1. at 토큰 저장
 
       // 2. 메인 페이지 이동
       if (res.status === 200) {
+        setToken(res.data.access);
         naviagate('/home');
       }
     } catch (error) {
