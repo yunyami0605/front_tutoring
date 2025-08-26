@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './PageLayout.module.css';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   title?: string;
@@ -16,12 +17,17 @@ function PageLayout({
   showTab = false,
   children,
 }: Props) {
+  const navigate = useNavigate();
   return (
     <div className={styles.container}>
       {/* Header */}
       {showHeader && (
         <header className={styles.header}>
-          {showBack && <button className={styles.backBtn}>←</button>}
+          {showBack && (
+            <button className={styles.backBtn} onClick={() => navigate(-1)}>
+              ←
+            </button>
+          )}
           <h1 className={styles.title}>{title}</h1>
         </header>
       )}
