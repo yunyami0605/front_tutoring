@@ -7,3 +7,9 @@ export type PostItem = {
   content: string;
   createdAt: string;
 };
+
+export type CreatePostValidError = {
+  title: string;
+  content: string;
+  common: string;
+};

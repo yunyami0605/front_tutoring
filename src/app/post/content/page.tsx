@@ -23,7 +23,7 @@ function PostContentPage() {
       return window.alert('잘못된 접근입니다.');
     }
 
-    navigate(`/post/register/${id}`);
+    navigate(`/post/update/${id}`);
   };
 
   const onDeleteContent = () => {

@@ -1,16 +1,22 @@
 import axios, { AxiosError } from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PageLayout from '../../../shared/components/layout/PageLayout';
 import { useAccessTokenStore } from '../../../features/auth/_stores/accessToken.store';
 import { postSchema } from '../../../features/post/_schemas/post.schemas';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import type { CreatePostForm } from '../../../features/post/_types/body';
-import type { CreatePostValidError } from '../../../features/post/_types/data';
+import type {
+  CreatePostValidError,
+  PostItem,
+} from '../../../features/post/_types/data';
 import PostForm from '../../../features/post/_components/PostForm';
 
-function PostRegisterPage() {
+function PostUpdatePage() {
   const { accessToken } = useAccessTokenStore();
   const navigate = useNavigate();
+  const params = useParams();
+
+  const id = params.id;
 
   const initFormState = {
     title: '',
@@ -29,7 +35,8 @@ function PostRegisterPage() {
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const valid = postSchema.safeParse(form);
+    // 수정 스키마로 변경
+    const valid = postSchema.partial().safeParse(form);
 
     if (!valid.success) {
       // 유효성 체크
@@ -47,13 +54,13 @@ function PostRegisterPage() {
     }
 
     try {
-      const res = await axios.post('http://localhost:4000/post', form, {
+      const res = await axios.patch(`http://localhost:4000/post/${id}`, form, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
 
-      if (res.status === 201) {
+      if (res.status === 200) {
         navigate(-1);
       }
     } catch (error) {
@@ -77,9 +84,32 @@ function PostRegisterPage() {
     }
   };
 
+  useEffect(() => {
+    if (params.id) {
+      axios
+        .get<PostItem>(`http://localhost:4000/post/${id}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then((response) => {
+          //
+          if (response.status === 200) {
+            setForm(response.data);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, []);
+
+  console.log(form);
+
   return (
     <PageLayout showHeader showBack>
       <PostForm
+        isModify={!!id}
         onSubmit={onSubmit}
         form={form}
         error={error}
@@ -89,4 +119,4 @@ function PostRegisterPage() {
   );
 }
 
-export default PostRegisterPage;
+export default PostUpdatePage;

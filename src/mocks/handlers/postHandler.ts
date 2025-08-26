@@ -101,6 +101,11 @@ export const postHandler = [
 
   // 게시글 수정
   http.patch('http://localhost:4000/post/:id', async ({ request, params }) => {
+    const res = checkAuth(request);
+    if (!res.ok) {
+      return res.error;
+    }
+
     const id = params.id;
     const data = (await request.json()) as Partial<PostItem>;
 
