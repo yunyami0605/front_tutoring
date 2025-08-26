@@ -14,6 +14,7 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/post" element={<PostsPage />} />
         <Route path="/post/register" element={<PostRegisterPage />} />
+        <Route path="/post/register/:id" element={<PostRegisterPage />} />
         <Route path="/post/:id" element={<PostContentPage />} />
       </Routes>
     </div>

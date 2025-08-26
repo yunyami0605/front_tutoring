@@ -7,6 +7,22 @@
 }
 
 /* 상단 프로필 영역 */
+.top_helper_section {
+  padding: 0 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.more_button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+}
+
 .profile {
   display: flex;
   align-items: center;
