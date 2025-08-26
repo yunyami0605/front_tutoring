@@ -1,0 +1,61 @@
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+}
+
+/* 상단 프로필 영역 */
+.profile {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+}
+
+.profileImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+/* 게시글 이미지 */
+.postImage {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+/* 버튼 영역 */
+.actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+}
+
+.actionsLeft {
+  display: flex;
+  gap: 12px;
+  font-size: 22px;
+}
+
+.actionsRight {
+  font-size: 22px;
+}
+
+/* 본문 영역 */
+.content_wrapper {
+  padding: 0 12px 12px 12px;
+}
+
+.title {
+  font-size: 16px;
+}
+
+.content {
+  font-size: 14px;
+  white-space: normal; /* 기본 줄바꿈 허용 */
+  word-break: break-word; /* 긴 단어도 강제로 줄바꿈 */
+  overflow-wrap: break-word; /* 현대 브라우저용 */
+}
