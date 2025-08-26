@@ -1,0 +1,29 @@
+/**
+ *@description auth constant
+ */
+export const authConstant = {
+  error: {
+    validation: {
+      // schema 검증 에러
+      wrongFormatEmail: '유효한 이메일을 입력해주세요.',
+      worngFormatPassword: {
+        min: '비밀번호는 최소 8자 이상입니다.',
+        max: '비밀번호는 최대 20자 이하입니다.',
+      },
+      wrongFormatNickname: {
+        min: '닉네임은 최소 2자 이상입니다.',
+        max: '닉네임은 최대 12자 이상입니다.',
+      },
+      notMatchPasswordConfirm: '비밀번호와 비밀번호 확인이 일치하지 않습니다.',
+    },
+    login: {
+      // login error
+      loginFail: '이메일 또는 비밀번호가 올바르지 않습니다.',
+      notExistAuth: '일치하는 계정이 없습니다.',
+    },
+    signup: {
+      // signup error
+      duplicateNickname: '중복된 닉네임입니다.',
+    },
+  },
+} as const;

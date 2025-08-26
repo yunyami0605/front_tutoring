@@ -6,14 +6,21 @@ interface Props {
   children: React.ReactNode;
   disabled?: boolean;
   onClick?: () => void;
+  type?: 'button' | 'submit';
 }
 
-function ActiveButton({ children, disabled = false, onClick }: Props) {
+function ActiveButton({
+  children,
+  disabled = false,
+  onClick,
+  type = 'button',
+}: Props) {
   return (
     <button
       className={clsx(styles.button, disabled && styles.disabled)}
       disabled={disabled}
       onClick={onClick}
+      type={type}
     >
       {children}
     </button>
