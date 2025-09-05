@@ -1,0 +1,9 @@
+.post_item_wrapper {
+  display: flex;
+  justify-content: between;
+  border: 1px solid;
+}
+
+.post_item_wrapper p {
+  font-size: 14px;
+}

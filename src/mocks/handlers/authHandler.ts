@@ -8,7 +8,7 @@ const userDb = [
 ];
 
 export const authHandler = [
-  http.post('http://naver.com/auth/login', async ({ request }) => {
+  http.post('http://localhost:4000', async ({ request }) => {
     const response = (await request.json()) as {
       email: string;
       password: string;

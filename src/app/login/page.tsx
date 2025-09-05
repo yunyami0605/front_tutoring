@@ -1,26 +1,29 @@
 import { useState } from 'react';
 import style from './LoginPage.module.css';
-import axios from 'axios';
 import LabeledInput from '../../shared/components/LabeledInput';
-import Test from './Test';
+import { useAccessTokenStore } from '../../features/auth/_stores/accessToken.store';
+import { useNavigate } from 'react-router-dom';
+import { apiCall } from '../../libs/api';
 
 /**
  *@description 로그인 페이지
  */
 function LoginPage() {
+  const navigate = useNavigate();
+  const { setToken } = useAccessTokenStore();
+
   const [form, setForm] = useState({
     email: '',
     password: '',
   });
-  const [show, setShow] = useState(false);
 
   /**
    *@description 인풋 변화 이벤트
    */
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>, key: string) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 
-    setForm((prev) => ({ ...prev, [key]: e.target.value }));
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   /**
@@ -30,10 +33,16 @@ function LoginPage() {
     e.preventDefault();
 
     try {
-      const res = await axios.post('http://naver.com/auth/login', form);
+      const res = await apiCall({
+        method: 'POST',
+        data: form,
+      });
+      // const res = await axios.post('http://naver.com/auth/login', form);
 
       if (res.status === 200) {
-        console.log('성공');
+        setToken(res.data.access);
+
+        navigate('/post');
       }
     } catch (error) {
       //
@@ -43,48 +52,8 @@ function LoginPage() {
     }
   };
 
-  // const onSubmit2 = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-
-  //   axios
-  //     .post('/login', form)
-  //     .then((res) => {
-  //       if (res.status === 200) {
-  //         console.log('성공');
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log('실패');
-  //     });
-  // };
-  /*
-useEffect(callback, array)
-*/
-
-  // 생명주기
-  // mount !
-  // update !
-  // unmount !
-  // useEffect(() => {
-  //   // document.addEventListener('mousedown', () => {
-  //   //   console.log('mouse');
-  //   // });
-
-  //   console.log('mount');
-
-  //   () => {
-  //     console.log('unmount');
-  //   };
-  // }, []);
-
   return (
     <div className={style.container}>
-      {show && <Test value={form.email} />}
-
-      <button onClick={() => setShow((prev) => !prev)}>
-        {show ? 'on' : 'off'}
-      </button>
-
       <form onSubmit={onSubmit} className={style.form}>
         <LabeledInput
           id="email"
@@ -92,9 +61,7 @@ useEffect(callback, array)
           type="email"
           placeholder="email"
           value={form.email}
-          onChange={(e) => {
-            onChange(e, 'email');
-          }}
+          onChange={onChange}
         />
 
         <LabeledInput
@@ -102,10 +69,8 @@ useEffect(callback, array)
           name="password"
           type="password"
           placeholder="password"
-          value={form.email}
-          onChange={(e) => {
-            onChange(e, 'password');
-          }}
+          value={form.password}
+          onChange={onChange}
         />
 
         <button type="submit">전송</button>

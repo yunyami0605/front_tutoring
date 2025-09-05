@@ -1,7 +1,8 @@
 import { setupWorker } from 'msw/browser';
 import { authHandler } from './handlers/authHandler';
+import { postHandler } from './handlers/postHandler';
 
-export const worker = setupWorker(...authHandler);
+export const worker = setupWorker(...authHandler, ...postHandler);
 
 // worker 로깅
 worker.events.on(

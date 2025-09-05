@@ -1,0 +1,18 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.image_field > label {
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+  line-height: 74px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+}
+
+.image_field > input[type='file'] {
+  display: none;
+}

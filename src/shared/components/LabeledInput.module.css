@@ -1,0 +1,8 @@
+.input_field > input {
+  width: 240px;
+  height: 44px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #333;
+  padding-left: 12px;
+}

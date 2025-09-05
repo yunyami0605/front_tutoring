@@ -6,14 +6,21 @@ type Props = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   id: string;
   name: string;
-  type: 'email' | 'password' | 'text';
+  type?: 'email' | 'password' | 'text';
   placeholder: string;
 };
 
 /**
  *@description 라벨이 있는 인풋 공통
  */
-function LabeledInput({ value, onChange, id, name, type, placeholder }: Props) {
+function LabeledInput({
+  value,
+  onChange,
+  id,
+  name,
+  type = 'text',
+  placeholder,
+}: Props) {
   return (
     <div className={styles.input_field}>
       <label htmlFor={id} />
